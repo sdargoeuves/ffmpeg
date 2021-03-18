@@ -6,7 +6,7 @@ likely to be compatible with TV where H265 is not available.
 Use the script mkv2avi.py
 
 ```bash
-python3 mkv2avi.py *path_video_folder*
+python3 mkv2avi.py path_video_folder
 ```
 
 Specify the path where the videos are. The output will be in the same folder
