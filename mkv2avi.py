@@ -74,7 +74,7 @@ def mkv2avi(path, output_str=None):
                     #If there is no S00E00 in the filename, we will have an error.
                     # we can offer to retry without the option -o
                     try:
-                        retry_err = str(input(f'\nERROR - S00E00 cannot be found in the source filename {file}\
+                        retry_err = str(input(f'\nERROR - S00E00 cannot be found in the source filename: {file}\
                             \nDo you want to try again without -o option (Y/[N])?'))
                     except KeyboardInterrupt:
                         sys.exit("\nExit due to user request -- Come back soon")
