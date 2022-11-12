@@ -23,12 +23,12 @@ def video_length(filename):
     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     duration = frame_count/fps
 
-    print('fps = ' + str(fps))
-    print('number of frames = ' + str(frame_count))
-    print('duration (S) = ' + str(duration))
+    print(f'fps = {str(fps)}')
+    print(f'number of frames = {frame_count}')
+    print(f'duration (S) = {str(duration)}')
     minutes = int(duration/60)
     seconds = duration%60
-    print('duration (M:S) = ' + str(minutes) + ':' + str(seconds))
+    print(f'duration (M:S) = {minutes}:{str(seconds)}')
 
 def select_folder():
     """
@@ -40,9 +40,7 @@ def select_folder():
     #from tkinter.filedialog import askdirectory
     root = Tk()
     root.withdraw()
-    path = filedialog.askdirectory(title='Select Folder')
-    #path = askdirectory(title='Select Folder')
-    return path
+    return filedialog.askdirectory(title='Select Folder')
 
 
 def mkv2avi(path, output_str=None):
@@ -63,12 +61,12 @@ def mkv2avi(path, output_str=None):
         entry_value = str(input("Are you happy to proceed (Y/[N])? "))
     except KeyboardInterrupt:
         sys.exit("\nExit due to user request -- Come back soon")
-    if entry_value in ["y","Y","yes","YES"]:
+    if entry_value in {"y", "Y", "yes", "YES"}:
         for file in list_file:
             #if we specified an output format, we search for S00E00
             if output_str is not None:
                 try:
-                    episode = re.search(r'[sS]\d+[Ee]\d+',file).group(0).upper()
+                    episode = re.search(r'[sS]\d+[Ee]\d+',file)[0].upper()
                     output = "".join([path,output_str,episode,".avi"])
                 except AttributeError:
                     #If there is no S00E00 in the filename, we will have an error.
@@ -79,12 +77,11 @@ def mkv2avi(path, output_str=None):
                     except KeyboardInterrupt:
                         sys.exit("\nExit due to user request -- Come back soon")
 
-                    if retry_err in ["y","Y","yes","YES"]:
+                    if retry_err in {"y", "Y", "yes", "YES"}:
                         output = "".join([file[:-4],".avi"])
                     else:
                         sys.exit("\nExit due to user request -- Retry aborted")
-                #output = "".join([path,output_str,episode,".avi"])
-            #otherwise we keep the same name but change the extension
+                            #output = "".join([path,output_str,episode,".avi"])
             else:
                 output = "".join([file[:-4],".avi"])
             command = f'ffmpeg -i "{file}" -c:v libx264 "{output}"'
@@ -92,7 +89,7 @@ def mkv2avi(path, output_str=None):
             exec_time = time.time()
             #time.sleep(2)
             os.system(command)
-            print("--- %s minutes ---" % (round((time.time() - exec_time)/60,2)))
+            print(f"--- {round((time.time() - exec_time) / 60, 2)} minutes ---")
     else:
         print('No action requested -- Come back soon')
 
@@ -112,4 +109,4 @@ if __name__ == "__main__":
         mkv2avi(mypath, myoutput_str)
     #Display time to execute
     print("--- TOTAL TIME ---\n--- %s minutes ---" % (round((time.time() - start_time)/60,2)))
-    print("-or %s seconds ---" % (round(time.time() - start_time,2)))
+    print(f"-or {round(time.time() - start_time, 2)} seconds ---")
